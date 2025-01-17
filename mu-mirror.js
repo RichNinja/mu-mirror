@@ -31,7 +31,13 @@ function setup() {
     videoElement = createVideo(['Presentation1.mp4'], videoLoaded);
     videoElement.hide();
 
-
+    let playButton = createButton('Start');
+    playButton.position(width / 2 - 30, height / 2);
+    playButton.mousePressed(() => {
+        videoElement.loop();
+        videoElement.play();
+        playButton.remove(); // Remove the button after interaction
+    });
 }
 
 function videoLoaded() {
