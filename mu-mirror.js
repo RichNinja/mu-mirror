@@ -1,4 +1,3 @@
-
 let videoElement;
 let prevImage = null;
 let currentImage = null;
@@ -28,20 +27,35 @@ let firstTwoFramesCaptured = false;
 let timeOfFirstFrame = 0;
 
 function setup() {
-    videoElement = createVideo([Presentation1.mp4], videoLoaded);
-    videoElement.hide(); // Hide the default video display
+    createCanvas(windowWidth, windowHeight);
+    videoElement = createVideo(['Presentation1.mp4'], videoLoaded);
+    videoElement.hide();
+
+
 }
 
 function videoLoaded() {
-    videoElement.loop();
-    videoElement.play();
-    videoElement.volume(0); // Mute video
+    console.log('Video loaded successfully');
     scaledWidth = videoElement.width;
     scaledHeight = videoElement.height;
 
     createCanvasForCurrentResolution();
     capturePhotoAsPrevImage();
 }
+
+function createCanvasForCurrentResolution() {
+    let aspectRatio = scaledWidth / scaledHeight;
+    if (windowHeight > windowWidth) {
+        let canvasHeight = windowHeight;
+        let canvasWidth = canvasHeight * aspectRatio;
+        createCanvas(canvasWidth, canvasHeight);
+    } else {
+        let canvasWidth = windowWidth;
+        let canvasHeight = canvasWidth / aspectRatio;
+        createCanvas(canvasWidth, canvasHeight);
+    }
+}
+
 
 function draw() {
     background(backgroundColor, backgroundFader);
