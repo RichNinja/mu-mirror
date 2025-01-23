@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mu Mirror with Video</title>
+    <title>Mu Mirror with Video File</title>
     <style>
         body {
             margin: 0;
@@ -17,11 +17,43 @@
         }
         canvas {
             display: block;
+            max-width: 100%;
+            max-height: 100vh;
+            visibility: visible !important; /* Force canvas to always be visible */
+        }
+        /* Hide the raw video element but keep it in the DOM for processing */
+        video {
+            position: absolute;
+            visibility: hidden;
+            pointer-events: none;
+        }
+        #startButton {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 20px 40px;
+            font-size: 24px;
+            cursor: pointer;
+            z-index: 100;
+            background: white;
+            border: none;
+            border-radius: 8px;
         }
     </style>
 </head>
 <body>
+    <button id="startButton">Start</button>
     <script src="p5.min.js"></script> <!-- Include p5.js library -->
     <script src="mu-mirror.js"></script> <!-- Your JavaScript file -->
+    <script>
+        // Add global video error handler
+        window.addEventListener('error', function(e) {
+            if (e.target.tagName === 'VIDEO') {
+                console.log('Video error:', e);
+                console.log('Video source:', e.target.src);
+            }
+        }, true);
+    </script>
 </body>
 </html>
